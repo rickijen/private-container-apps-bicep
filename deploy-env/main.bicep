@@ -40,3 +40,11 @@ module acr 'acr.bicep' = {
   }
 }
 
+module bastion 'bastion.bicep' = {
+  name: 'bastion'
+  params: {
+    location: location
+    namePrefix: prefixName
+    bastionSubnetId: vnet.outputs.bastionSubnetId
+  }
+}

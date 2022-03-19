@@ -27,7 +27,7 @@ resource environment 'Microsoft.App/managedEnvironments@2022-01-01-preview' = {
       }
     }
     vnetConfiguration: {
-      internal: false
+      internal: true
       infrastructureSubnetId: controlPlaneSubnetId
       runtimeSubnetId: applicationsSubnetId
       // dockerBridgeCidr:''
