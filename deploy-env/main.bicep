@@ -64,6 +64,7 @@ module nsg 'nsg.bicep' = {
     namePrefix: prefixName
   }
 }
+
 module jumpbox 'jumpbox.bicep' = {
   name: 'jumpbox'
   params: {
