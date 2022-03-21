@@ -1,6 +1,6 @@
----
-title: Private Azure Container Apps (Microsoft.App) and Private DNS Zone
----
+
+# Private Azure Container Apps (Microsoft.App) and Private DNS Zone
+
 ```bash
 az group create --location eastus --name rb-container-apps
 az configure --defaults group=rb-container-apps
