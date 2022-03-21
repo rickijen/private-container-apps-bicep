@@ -1,5 +1,5 @@
 
-# Private Azure Container Apps (Microsoft.App) and Private DNS Zone
+# Azure Bicep: Private Container Apps (Microsoft.App) and Private DNS Zone
 
 ```bash
 az group create --location eastus --name rb-container-apps
