@@ -1,5 +1,9 @@
 param environmentName string
-param containerAppName string
+param vnetName string
+
+@maxLength(8)
+@minLength(8)
+param appName string
 
 param containerImage string
 param containerPort int
@@ -14,11 +18,15 @@ resource environment 'Microsoft.App/managedEnvironments@2022-01-01-preview' exis
   name: environmentName
 }
 
+resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' existing = {
+  name: vnetName
+}
+
 module containerApps 'container.bicep' = {
   name: 'containerApps'
   params: {
     location: location
-    containerAppName: containerAppName
+    appName: appName
     containerImage: containerImage
     containerPort: containerPort
     environmentId: environment.id
@@ -27,6 +35,23 @@ module containerApps 'container.bicep' = {
     transport: transport
     allowInsecure: allowInsecure
     env: env
+  }
+}
+
+var containerAppBaseDomain = skip(containerApps.outputs.fqdn, 8+1)
+
+var arecords = [
+  {
+    name: '*'
+    ipv4Address: environment.properties.staticIp
+  }
+]
+module pdnsz 'privatednszone.bicep' = {
+  name: 'pdnsz'
+  params: {
+    dnsZoneName: containerAppBaseDomain
+    vnetName: vnet.name
+    arecords: arecords
   }
 }
 

@@ -1,4 +1,4 @@
-param containerAppName string
+param appName string
 param location string = resourceGroup().location
 param environmentId string
 param containerImage string
@@ -35,7 +35,7 @@ var memory = '0.5Gi'
 
 // https://github.com/Azure/azure-rest-api-specs/blob/09c4eba6c2d24c5f18226f36948d7987f3b50055/specification/app/resource-manager/Microsoft.App/preview/2022-01-01-preview/ContainerApps.json#L412
 resource containerApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
-  name: containerAppName
+  name: appName
   location: location
   identity: {
     //type: 'SystemAssigned'
@@ -65,7 +65,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
       containers: [
         {
           image: containerImage
-          name: containerAppName
+          name: appName
           env: env
           resources: {
             cpu: cpu
@@ -86,9 +86,6 @@ resource containerApp 'Microsoft.App/containerApps@2022-01-01-preview' = {
             }
           }
         ]
-      }
-      dapr: {
-        enabled: false
       }
     }
   }
